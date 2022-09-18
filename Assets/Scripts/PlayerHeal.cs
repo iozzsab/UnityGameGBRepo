@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerHeal : MonoBehaviour
 {
     [SerializeField] private int maximumHP = 100;
-    int currentHP;          
+    [SerializeField] private int currentHP;          
     void Start()
     {
         currentHP = maximumHP;
@@ -21,6 +21,11 @@ public class PlayerHeal : MonoBehaviour
         {
             currentHP = maximumHP;
         }
+
+        if (deltaHP > 0 && currentHP < maximumHP)
+            currentHP = currentHP + deltaHP;
+        else if (currentHP > maximumHP)
+            currentHP = maximumHP;
 
         print("Количество жизней " + currentHP);
         if (currentHP <= 0)
