@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Security;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using static UnityEngine.GraphicsBuffer;
 
 namespace StartGameDev
 {
     public class BulletTurret : MonoBehaviour
     {
+        [SerializeField] private int damage = -15;
         void FixedUpdate()
         {
             
@@ -22,13 +24,12 @@ namespace StartGameDev
         {
             if (collision.collider.tag == "Player")
             {
-                collision.gameObject.GetComponent<PlayerHeal>().RecountHP(-5);
+                collision.gameObject.GetComponent<PlayerHeal>().RecountHP(damage);
                 Destroy(gameObject);
 
             }
-
-                
         }
+       
     }
 
 }

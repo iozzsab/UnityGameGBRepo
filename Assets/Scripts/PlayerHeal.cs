@@ -1,16 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHeal : MonoBehaviour
 {
+    
     [SerializeField] private int maximumHP = 100;
-    [SerializeField] private int currentHP;          
+    [SerializeField] private int currentHP;
+    public Image bar;
+    public float fill;
     void Start()
     {
+        fill = 1f;
         currentHP = maximumHP;
     }
-
+    private void Update()
+    {
+        fill = currentHP * 0.01f;
+        bar.fillAmount = fill;
+    }
     public void RecountHP(int deltaHP)
     {
         if (deltaHP < 0)

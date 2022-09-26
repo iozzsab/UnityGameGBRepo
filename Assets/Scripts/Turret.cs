@@ -7,14 +7,14 @@ namespace StartGameDev
 {
     public class Turret : MonoBehaviour
     {
-       /* [SerializeField] public FirstPersonController _player;
+       [SerializeField] public FirstPersonController _player;
          [SerializeField] private float _speedRotate;
-        [SerializeField] private float speed = 3f;
+       [SerializeField] private float speed = 3f;
 
          [SerializeField] private Transform _bulletSpawnPosition;
          [SerializeField] private GameObject _bulletPrefab;
 
-        private bool canFire;
+        private bool canFire = true;
 
 
          void Start()
@@ -26,7 +26,8 @@ namespace StartGameDev
 
          void FixedUpdate()
          {   
-            StartCoroutine(Waiter());
+            
+            
              if (Vector3.Distance(_bulletSpawnPosition.transform.position, _player.transform.position) < 5)
              {
                  var direction = _player.transform.position - transform.position;
@@ -34,31 +35,33 @@ namespace StartGameDev
                  var stepRotate = Vector3.RotateTowards(transform.forward, direction, _speedRotate * Time.fixedDeltaTime, 5f);
 
                  transform.rotation = Quaternion.LookRotation(stepRotate);
-                 Fire(); 
 
-                 
              }
-         }
+
+            if (Vector3.Distance(_bulletSpawnPosition.transform.position, _player.transform.position) < 5 && canFire)
+            {
+                Fire();
+                canFire = false;
+                StartCoroutine(WaiterForShoot());
+            }
+
+
+        }
 
          private void Fire()
          {
-
-            if (canFire)
-            {
-                var bulletObj = Instantiate(_bulletPrefab, _bulletSpawnPosition.position, _bulletSpawnPosition.rotation);
-                bulletObj.gameObject.GetComponent<Rigidbody>().velocity = Camera.main.transform.forward * speed;
-            }
-             //Transform target, float lifeTime, float speed)
-
+            GameObject bul = (GameObject)Instantiate(_bulletPrefab, _bulletSpawnPosition.position, Quaternion.identity);
+            bul.gameObject.GetComponent<Rigidbody>().velocity = _bulletSpawnPosition.transform.forward * speed;
+            
          }
+        IEnumerator WaiterForShoot()
+        {
+            yield return new WaitForSeconds(0.5f);
+            canFire = true;
+            
+        }
 
-         IEnumerator  Waiter()
-         {
-             yield return new WaitForSeconds(1f);
-             canFire = true;
-            yield return new WaitForSeconds(1f);
-            canFire = false;
-           /*  /**/
+       
     }
 }
 
