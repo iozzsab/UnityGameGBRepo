@@ -42,6 +42,7 @@ public class AIEnemy : MonoBehaviour
 
     private void MoveAnimal()
     {
-        _navMeshAgent.SetDestination(RandomNavSphere(moveDistance));
+        if (GetComponent<AIEnemy>().enabled == true)
+            _navMeshAgent.SetDestination(RandomNavSphere(moveDistance));
     }
 }
