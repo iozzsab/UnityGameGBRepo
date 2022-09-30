@@ -11,7 +11,7 @@ public class EndLvl : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
           print("Конец уровня");
-          SceneManager.LoadScene(1);
+          SceneManager.LoadScene(2);//для зацикливания
         }
     }
 }
